@@ -57,6 +57,10 @@ clearButton.addEventListener('click', () =>  {
     clearDisplay();
 })
 
+deleteButton.addEventListener('click', () => {
+    
+})
+
 calculatorNumberButtons.forEach(button => button.addEventListener('click', () => {
     let buttonContent = button.innerText;
     calculatorDisplay.placeholder = buttonContent;
