@@ -24,6 +24,10 @@
     background-color: orange;
 }
 
+.calculatorWideButtons:hover {
+    background-color: red;
+}
+
 .calculator .calculatorWideButtons {
     width: 50%;
     height: 40px;
@@ -37,4 +41,5 @@
     font-size: 48px;
     font-weight: bold;
     color: black;
+    pointer-events: none;
 }

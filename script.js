@@ -36,5 +36,31 @@ function operate(num1, operator, num2) {
     console.log(operate)
 }
 
-let buttonValueTest = document.querySelector("value")
-console.log(buttonValueTest)
+
+
+const calculatorDisplay = document.querySelector('[data-display]');
+const calculatorOperatorButtons =  document.querySelectorAll('[data-operator]');
+const clearButton = document.querySelector('[data-all-clear]');
+const deleteButton = document.querySelector('[data-delete]');
+const equalsButton = document.querySelector('[data-equals]');
+const calculatorNumberButtons = document.querySelectorAll('[data-number]');
+
+function updateCalculatorDisplay() {
+
+}
+
+function clearDisplay() {
+    calculatorDisplay.placeholder="0"
+}
+
+clearButton.addEventListener('click', () =>  {
+    clearDisplay();
+})
+
+calculatorNumberButtons.forEach(button => button.addEventListener('click', () => {
+    let buttonContent = button.innerText;
+    calculatorDisplay.placeholder = buttonContent;
+    console.log(buttonContent)
+}))
+
+console.log(calculatorNumberButtons);
