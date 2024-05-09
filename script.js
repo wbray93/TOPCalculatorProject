@@ -33,7 +33,6 @@ function divide(num1, num2) {
     return result;
 }
 
-//unsure how to pass my data-operator attibute here. im assuming i pass the equals button
 function operate() {
     if (operator === "+") {
         add(parseFloat(calculationFirstNumber), parseFloat(calculationSecondNumber));
