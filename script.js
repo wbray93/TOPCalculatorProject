@@ -10,43 +10,52 @@ const deleteButton = document.querySelector('[data-delete]');
 const equalsButton = document.querySelector('[data-equals]');
 const calculatorNumberButtons = document.querySelectorAll('[data-number]');
 
+
 function add(num1, num2) {
+    console.log(num1, num2);
     result = num1 + num2;
-    console.log(result)
+    return result;
 }
 
 function subtract(num1, num2) {
     result = num1 - num2;
-    console.log(result)
+    return result;
 }
 
 function multiply(num1, num2) {
     result = num1 * num2;
-    console.log(result)
+    return result;
 }
 
 function divide(num1, num2) {
     result = num1 / num2;
     console.log(result)
+    return result;
 }
-
 
 //unsure how to pass my data-operator attibute here. im assuming i pass the equals button
 function operate() {
     if (operator === "+") {
-        add(calculationFirstNumber, calculationSecondNumber);
+        add(parseFloat(calculationFirstNumber), parseFloat(calculationSecondNumber));
     } else if (operator === "-") {
-        subtract(calculationFirstNumber, calculationSecondNumber);
+        subtract(parseFloat(calculationFirstNumber), parseFloat(calculationSecondNumber));
     } else if (operator === "*") {
-        multiply(calculationFirstNumber, calculationSecondNumber)
+        multiply(parseFloat(calculationFirstNumber), parseFloat(calculationSecondNumber));
     } else if (operator === "/") {
-        divide(calculationFirstNumber, calculationSecondNumber);
+        divide(parseFloat(calculationFirstNumber), parseFloat(calculationSecondNumber));
     }
+
+    displayValue = "";
     updateCalculatorDisplay(result);
 }
 
+let populateDisplay = (displayValue) => {
+    calculatorDisplay.innerText = displayValue;
+}
+
 function updateCalculatorDisplay(value) {
-    calculatorDisplay.placeholder = value;
+    displayValue = value;
+    populateDisplay(displayValue);
 };
 
 function clearDisplay() {
@@ -62,29 +71,37 @@ deleteButton.addEventListener('click', () => {
 })
 
 equalsButton.addEventListener('click', () => {
-    const [num1Str, operator, num2Str] = displayValue.split(/(\+|\-|\*|\/)/);
-    calculationFirstNumber = parseInt(num1Str)
-    calculationSecondNumber = parseInt(num2Str);
     operate();
 });
 
 calculatorNumberButtons.forEach(button => button.addEventListener('click', () => {
-    let buttonContent = button.innerText;
-    if(operator !== undefined && result === undefined) {
-        clearDisplay();
+    if (operator === undefined) {
+        if (calculationFirstNumber === undefined) {
+            calculationFirstNumber = button.innerText;
+        } else {
+            calculationFirstNumber += button.innerText;
+        }
+    } else {
+        if (calculationSecondNumber === undefined) {
+            calculationSecondNumber = button.innerText;
+        } else {
+            calculationSecondNumber += button.innerText;
+        }
     }
-    displayValue += buttonContent;
-    updateCalculatorDisplay(displayValue);
-}))
-
-calculatorOperatorButtons.forEach(button => button.addEventListener('click', () => {
-    operator = button.innerText;
-    calculationFirstNumber = parseInt(displayValue);
-    displayValue += operator;
+    displayValue = calculationFirstNumber + (operator || '') + (calculationSecondNumber || "");
     updateCalculatorDisplay(displayValue);
 }));
 
+calculatorOperatorButtons.forEach(button => button.addEventListener('click', () => {
+    operator = button.innerText;
+    if(calculationFirstNumber !== undefined && calculationSecondNumber === undefined) {
+        calculationFirstNumber = displayValue;
+    } else if (calculationSecondNumber !== undefined) {
+        operate();
+    }
 
-console.log(calculatorNumberButtons);
+    calculationSecondNumber = undefined;
 
-console.log(result)
+    displayValue = calculationFirstNumber + operator;
+    updateCalculatorDisplay(displayValue);
+}));
